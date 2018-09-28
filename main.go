@@ -29,8 +29,11 @@ func loadEnv() {
 	addr = getEnvOr("YARN_PROMETHEUS_LISTEN_ADDR", ":9113")
 
 	scheme := getEnvOr("YARN_PROMETHEUS_ENDPOINT_SCHEME", "http")
-	host := getEnvOr("YARN_PROMETHEUS_ENDPOINT_HOST", "localhost")
-	port := getEnvOr("YARN_PROMETHEUS_ENDPOINT_PORT", "8088")
+
+	hostName, err := os.Hostname()
+	log.Println(hostName)
+	host := getEnvOr("YARN_PROMETHEUS_ENDPOINT_HOST", hostName)
+	port := getEnvOr("YARN_PROMETHEUS_ENDPOINT_PORT", "23188")
 	path := getEnvOr("YARN_PROMETHEUS_ENDPOINT_PATH", "ws/v1/cluster/metrics")
 
 	e, err := url.Parse(scheme + "://" + host + ":" + port + "/" + path)
